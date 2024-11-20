@@ -3,12 +3,16 @@ import pandas as pd
 import numpy as np
 import pickle
 
-# Cargar el modelo entrenado
-with open("modelo.pkl", "rb") as file:
-    model = pickle.load(file)
-
 # Título de la aplicación
 st.title("Detección de Fraude en Transacciones")
+
+# Intentar cargar el modelo entrenado
+try:
+    with open("modelo.pkl", "rb") as file:
+        model = pickle.load(file)
+except Exception as e:
+    st.error(f"Error al cargar el modelo: {e}")
+    st.stop()  # Detener la ejecución si no se pudo cargar el modelo
 
 # Definir las entradas del usuario
 variables = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
