@@ -1,7 +1,11 @@
-```markdown
 # Detección de Fraude en Transacciones
 
 Este proyecto utiliza un modelo de Machine Learning basado en XGBoost para predecir si una transacción es fraudulenta o no, a partir de un conjunto de características de la transacción.
+
+
+## Realizado por:
+
+- John Steven Ceballos Agudelo
 
 ## Descripción
 
