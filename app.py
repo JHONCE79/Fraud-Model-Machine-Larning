@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import pickle
 
-# Título de la aplicación
 st.title("Detección de Fraude en Transacciones")
 
 # Intentar cargar el modelo entrenado
@@ -12,16 +11,16 @@ try:
         model = pickle.load(file)
 except Exception as e:
     st.error(f"Error al cargar el modelo: {e}")
-    st.stop()  # Detener la ejecución si no se pudo cargar el modelo
+    st.stop()  
 
-# Definir las entradas del usuario
+# Entradas del usuario
 variables = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
              'k', 'l', 'm', 
              'n', 'o', 'p', 
              'q', 'r', 's', 
              'monto']
 
-# Crear un diccionario para almacenar los datos de entrada
+# Diccionario para almacenar los datos de entrada
 input_data = {}
 
 # Menú desplegable para seleccionar el país
@@ -37,12 +36,11 @@ input_data['pais'] = st.selectbox("Seleccione el país:", paises)
 for var in variables:
     input_data[var] = st.number_input(f"Ingrese valor para {var}:", value=0.0)
 
-# Botón para realizar la predicción
 if st.button("Predecir"):
     # Crear un DataFrame a partir de los datos recibidos
     input_df = pd.DataFrame(input_data, index=[0])
     
-    # Procesar los datos como lo hiciste en tu preprocesamiento
+    # Procesar los datos 
     input_df.columns = input_df.columns.str.strip().str.lower().str.replace(' ', '')
     
     # Convertir la columna pais a formato j_<pais>
@@ -62,7 +60,7 @@ if st.button("Predecir"):
     # Realizar One-Hot Encoding para la variable j
     input_df = pd.get_dummies(input_df, columns=['j'], drop_first=True)
     
-    # Asegurarse que las columnas estén en el mismo orden que se usó para entrenar el modelo
+    # Asegura que las columnas estén en el mismo orden que se usó para entrenar el modelo
     model_columns = model.get_booster().feature_names
     input_df = input_df.reindex(columns=model_columns, fill_value=0)
 
