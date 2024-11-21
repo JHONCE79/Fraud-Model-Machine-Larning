@@ -5,6 +5,9 @@ import pickle
 
 st.title("Detección de Fraude en Transacciones")
 
+# Agregar un encabezado
+st.header("Ingrese los 19 datos solicitados para poder realizar la prediccion")
+
 # Intentar cargar el modelo entrenado
 try:
     with open("modelo.pkl", "rb") as file:
@@ -15,7 +18,7 @@ except Exception as e:
 
 # Entradas del usuario
 variables = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
-             'k', 'l', 'm',  # Incluye 'k', aunque será ignorada más adelante
+             'k', 'l', 'm',  
              'n', 'o', 'p', 
              'q', 'r', 's', 
              'monto']

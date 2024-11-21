@@ -5,7 +5,6 @@ from imblearn.under_sampling import RandomUnderSampler
 from xgboost import XGBClassifier
 import pickle
 from sklearn.impute import KNNImputer
-from sklearn.metrics import accuracy_score, roc_auc_score, roc_curve, confusion_matrix, classification_report
 
 # Cargar los datos
 data = pd.read_csv("data.csv")  
@@ -34,8 +33,6 @@ data[numerical_cols] = np.sqrt(data[numerical_cols])
 
 # One-hot encoding de la columna 'j'
 data = pd.get_dummies(data, columns=['j'], drop_first=True)
-
-
 
 # Dividir los datos en variables independientes (X) y dependientes (y)
 X = data.drop('fraude', axis=1)
