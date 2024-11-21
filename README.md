@@ -82,6 +82,8 @@ Cuando el usuario ingresa datos en la aplicación de Streamlit y presiona el bot
 ```plaintext
 .
 ├── app.py             # Aplicación Streamlit para la interfaz de usuario
+├── model.py           # Creación del modelo
+├── EDA.ipynb          # Exploración de datos
 ├── data.csv           # Conjunto de datos de transacciones
 ├── modelo.pkl         # Modelo XGBoost entrenado
 ├── requirements.txt   # Dependencias necesarias
