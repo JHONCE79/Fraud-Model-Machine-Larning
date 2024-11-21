@@ -6,7 +6,7 @@ import pickle
 st.title("Detección de Fraude en Transacciones")
 
 # Agregar un encabezado
-st.header("Ingrese los 19 datos solicitados para poder realizar la prediccion")
+st.write("Ingrese los 19 datos solicitados para poder realizar la prediccion")
 
 # Intentar cargar el modelo entrenado
 try:
