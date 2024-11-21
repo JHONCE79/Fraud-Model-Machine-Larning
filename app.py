@@ -11,11 +11,11 @@ try:
         model = pickle.load(file)
 except Exception as e:
     st.error(f"Error al cargar el modelo: {e}")
-    st.stop()  
+    st.stop()
 
 # Entradas del usuario
 variables = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
-             'k', 'l', 'm', 
+             'k', 'l', 'm',  # Incluye 'k', aunque será ignorada más adelante
              'n', 'o', 'p', 
              'q', 'r', 's', 
              'monto']
@@ -32,7 +32,7 @@ paises = ['AU', 'BR', 'CA', 'CH', 'CL',
 
 input_data['pais'] = st.selectbox("Seleccione el país:", paises)
 
-# Crear campos de entrada para cada variable (incluyendo pais)
+# Crear campos de entrada para cada variable
 for var in variables:
     input_data[var] = st.number_input(f"Ingrese valor para {var}:", value=0.0)
 
@@ -40,7 +40,7 @@ if st.button("Predecir"):
     # Crear un DataFrame a partir de los datos recibidos
     input_df = pd.DataFrame(input_data, index=[0])
     
-    # Procesar los datos 
+    # Procesar los datos
     input_df.columns = input_df.columns.str.strip().str.lower().str.replace(' ', '')
     
     # Convertir la columna pais a formato j_<pais>
@@ -49,7 +49,10 @@ if st.button("Predecir"):
     # Eliminar la columna pais, ya que no es necesaria para la predicción
     input_df.drop('pais', axis=1, inplace=True)
     
-    # Convertir las columnas a numéricas (eliminando comas)
+    # Eliminar la columna 'k', ya que no se considera en el modelo
+    input_df.drop('k', axis=1, inplace=True)
+    
+    # Convertir las columnas a numéricas
     for col in ['q', 'r', 'monto']:
         input_df[col] = pd.to_numeric(input_df[col], errors='coerce')
     
@@ -60,10 +63,10 @@ if st.button("Predecir"):
     # Realizar One-Hot Encoding para la variable j
     input_df = pd.get_dummies(input_df, columns=['j'], drop_first=True)
     
-    # Asegura que las columnas estén en el mismo orden que se usó para entrenar el modelo
+    # Asegurar que las columnas estén en el mismo orden que se usó para entrenar el modelo
     model_columns = model.get_booster().feature_names
     input_df = input_df.reindex(columns=model_columns, fill_value=0)
-
+    
     # Realizar la predicción
     prediction = model.predict(input_df)
     

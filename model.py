@@ -5,13 +5,12 @@ from imblearn.under_sampling import RandomUnderSampler
 from xgboost import XGBClassifier
 import pickle
 from sklearn.impute import KNNImputer
-
+from sklearn.metrics import accuracy_score, roc_auc_score, roc_curve, confusion_matrix, classification_report
 
 # Cargar los datos
 data = pd.read_csv("data.csv")  
 
-#Preprocesamiento
-
+# Preprocesamiento
 data.columns = data.columns.str.strip().str.lower().str.replace(' ', '_')
 
 # Convertir las columnas 'q', 'r', 'monto' a numéricas (eliminando comas y asegurando que sean float)
@@ -19,7 +18,7 @@ data['q'] = pd.to_numeric(data['q'].str.replace(',', ''), errors='coerce')
 data['r'] = pd.to_numeric(data['r'].str.replace(',', ''), errors='coerce')
 data['monto'] = pd.to_numeric(data['monto'].str.replace(',', ''), errors='coerce')
 
-# Rellenar valores nulos en la columna 'c' usando KNNImputer
+# Imputar valores faltantes en la columna 'c' utilizando KNNImputer
 imputer = KNNImputer(n_neighbors=5)
 data[['c']] = imputer.fit_transform(data[['c']])
 
@@ -31,10 +30,12 @@ data['s'] = data['s'].replace(-1, median_s)
 
 # Aplicación de transformación de raíz cuadrada en las variables numéricas
 numerical_cols = data.select_dtypes(include=[np.number]).columns.drop('fraude')
-data[numerical_cols] = np.sqrt(data[numerical_cols])
+data[numerical_cols] = np.sqrt(data[numerical_cols])    
 
 # One-hot encoding de la columna 'j'
 data = pd.get_dummies(data, columns=['j'], drop_first=True)
+
+
 
 # Dividir los datos en variables independientes (X) y dependientes (y)
 X = data.drop('fraude', axis=1)
@@ -59,6 +60,7 @@ model = XGBClassifier(
     random_state=42
 )
 model.fit(X_train_resampled, y_train_resampled)
+
 
 # Guardar el modelo entrenado en un archivo .pkl
 with open("modelo.pkl", "wb") as file:
