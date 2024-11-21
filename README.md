@@ -35,6 +35,11 @@ pip install streamlit pandas numpy scikit-learn imbalanced-learn xgboost
 
 ## Uso
 
+### Modelo en la nube
+El modelo se establecio en la nube con la ayuda del servicio Streamlit cloud, solo debes pegar el siguiente link en tu navegador para utilizarlo.
+
+`https://fraud-model-machine-larning-fqpvqityytg8udz4qtcj22.streamlit.app/`
+
 ### Interfaz de Usuario con Streamlit
 
 1. Ejecuta el siguiente comando para iniciar la aplicación en Streamlit:
